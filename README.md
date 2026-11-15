@@ -10,7 +10,7 @@ Platypus is a web platform where instructors build programming courses and stude
 
 **What I owned:**
 
-- The AI learning features on **Amazon Bedrock** (Socratic coding hints and a course-aware chatbot)
+- The AI learning features on **Amazon Bedrock** (coding hints and a course-aware chatbot)
 - The **AWS deployment** and cloud security
 - **In-browser Python and Turtle graphics** execution
 
@@ -22,7 +22,9 @@ Users reach the platform through an AWS load balancer. A single EC2 instance run
 
 ## Key decisions
 
-**Choosing the model.** The client asked me to choose the AI service. We compared Amazon Bedrock, an external OpenAI-compatible provider and a mock provider. I chose Bedrock with **Amazon Nova Micro**: our use cases (hints, programming guidance and course chat) were text-only, so a larger multimodal model was unnecessary. Nova Micro suited low-latency, low-cost text interactions and kept model access and IAM permissions inside AWS.
+**Choosing the model.** The client asked me to choose the AI service. We compared Amazon Bedrock, an external OpenAI-compatible provider and a mock provider. I chose Bedrock with **Amazon Nova Micro** for the trial phase: our use cases (hints, programming guidance and course chat) were text-only, so a larger multimodal model was unnecessary. Nova Micro suited low-latency, low-cost text interactions and kept model access and IAM permissions inside AWS.
+
+**Hints that teach, not tell.** Each hint explains the next step without giving code students can copy. The client asked for this level of detail because the users are first-semester students with no coding background, and the prompt can be tuned. Instructors set the hint limit for each activity, or turn hints off.
 
 **A provider-agnostic AI layer.** Features call a shared interface with common request, response and error types, so the model or provider can change without rewriting features. A mock provider keeps development and automated tests cheap.
 
@@ -47,10 +49,10 @@ Users reach the platform through an AWS load balancer. A single EC2 instance run
 
 ## What I would do differently
 
-- **Tighter hint guardrails.** Later hints in a sequence could become too direct. I would add an output check that blocks hints containing the solution before they reach the student.
-- **HTTPS and infrastructure as code.** Add TLS on the load balancer with AWS Certificate Manager, and define the environment in Terraform instead of configuring it by hand.
-- **Move off a single EC2 instance.** Run the services on ECS Fargate for resilience and simpler scaling.
-- **Measure cost and latency.** We chose Nova Micro for low cost and latency but did not benchmark either. I would capture CloudWatch metrics from day one.
+- **HTTPS.** The load balancer currently serves HTTP on port 80. I would add TLS with AWS Certificate Manager and redirect all traffic to HTTPS.
+- **Infrastructure as code.** Define the environment in Terraform instead of configuring it by hand, so it can be rebuilt and reviewed reliably.
+- **Move off a single EC2 instance.** All services run on one instance, so it is a single point of failure. I would run them on ECS Fargate for resilience and simpler scaling.
+- **Re-evaluate the model for production.** Nova Micro was a low-cost choice for the trial. For production I would benchmark answer quality, speed and cost with CloudWatch metrics, then choose the model that fits best.
 
 ## Tech stack
 
