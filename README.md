@@ -54,9 +54,9 @@ Users reach the platform through an AWS load balancer. A single EC2 instance run
 
 ## Tech stack
 
-**AWS:** EC2, ECR, Application Load Balancer, IAM roles and instance profiles, Amazon Bedrock (Nova Micro)
-**Application:** React, TypeScript, Express, PostgreSQL, Redis, BullMQ, Flyway, Judge0
-**Tooling:** Docker, Docker Compose, Nginx, Pyodide, Web Workers, HTML Canvas, OpenAI Codex
+- **AWS:** EC2, ECR, Application Load Balancer, IAM roles and instance profiles, Amazon Bedrock (Nova Micro)
+- **Application:** React, TypeScript, Express, PostgreSQL, Redis, BullMQ, Flyway, Judge0
+- **Tooling:** Docker, Docker Compose, Nginx, Pyodide, Web Workers, HTML Canvas, OpenAI Codex
 
 ## Contact
 
