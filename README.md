@@ -16,7 +16,7 @@ Platypus is a web platform where instructors build programming courses and stude
 
 ## Architecture
 
-![AWS deployment architecture](images/aws-architecture.png)
+![AWS deployment architecture](images./01-aws-architecture.png)
 
 Users reach the platform through an AWS load balancer. A single EC2 instance runs the stack with Docker Compose: Nginx serving the React app and proxying `/api` to an Express API, a BullMQ worker, PostgreSQL with Flyway migrations, Redis, and Judge0 for remote code execution. Images are pulled from private Amazon ECR repositories, and the API calls Amazon Bedrock using temporary credentials from an EC2 IAM role.
 
